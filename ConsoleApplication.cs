@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Text;
-using CAHealthQueries.Models;
+using CAHealthQueries.NPPES;
 using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Data;
@@ -46,10 +46,10 @@ namespace CAHealthQueries
             // SqlQuery1();
 
             // Entity Framework Core to query service healthcare data 
-            // EFCoreQuery1();
+             EFCoreQuery1();
 
             // Entity Framework Core used to query locations healthcare data
-            // EFCoreQuery2();
+             EFCoreQuery2();
 
             // LINQ to Entities query with simple join of locations and services
              LINQ2EntityQuery1();
@@ -104,10 +104,10 @@ namespace CAHealthQueries
 
         private void LINQ2EntityQuery1()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<CA_DATAContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<NPPESContext>();
             optionsBuilder.UseSqlServer(new SqlConnection(_connstr, _sqlcred));
 
-            using (var db = new CA_DATAContext(optionsBuilder.Options))
+            using (var db = new NPPESContext(optionsBuilder.Options))
             {
                 var locs = from location in db.HealthcareFacilityLocations
                            from service in db.HealthcareFacilityServices
@@ -124,9 +124,9 @@ namespace CAHealthQueries
 
         private void EFCoreQuery2()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<CA_DATAContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<NPPESContext>();
             optionsBuilder.UseSqlServer(new SqlConnection(_connstr, _sqlcred));
-            using (var db = new CA_DATAContext(optionsBuilder.Options))
+            using (var db = new NPPESContext(optionsBuilder.Options))
             {
                 var locs = from location in db.HealthcareFacilityLocations
                            where location.CountyName == "SAN FRANCISCO"
@@ -142,9 +142,9 @@ namespace CAHealthQueries
 
         private void EFCoreQuery1()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<CA_DATAContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<NPPESContext>();
             optionsBuilder.UseSqlServer(new SqlConnection(_connstr, _sqlcred));
-            using (var db = new CA_DATAContext(optionsBuilder.Options))
+            using (var db = new NPPESContext(optionsBuilder.Options))
             {
                 // Read
                 var locs = from service in db.HealthcareFacilityServices

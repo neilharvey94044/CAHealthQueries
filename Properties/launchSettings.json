@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CAHealthQueries": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\dev\\repos\\CAHealthQueries\\"
+    }
+  }
+}

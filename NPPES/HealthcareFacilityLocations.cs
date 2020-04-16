@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CAHealthQueries.Models
+namespace CAHealthQueries.NPPES
 {
     [Table("healthcare_facility_locations")]
     public partial class HealthcareFacilityLocations
     {
-        [Required]
-        [Column("FACID")]
+        [Column("FACID", TypeName = "numeric(18, 0)")]
         public decimal? Facid { get; set; }
-        [Column("NPI")]
-        [StringLength(13)]
-        public string Npi { get; set; }
+        [Column("NPI", TypeName = "numeric(18, 0)")]
+        public decimal? Npi { get; set; }
         [Required]
         [Column("FACNAME")]
         [StringLength(100)]
@@ -30,9 +28,8 @@ namespace CAHealthQueries.Models
         [Column("LTC")]
         [StringLength(50)]
         public string Ltc { get; set; }
-        [Required]
         [Column("CAPACITY")]
-        public int? Capacity { get; set; }
+        public int Capacity { get; set; }
         [Required]
         [Column("ADDRESS")]
         [StringLength(50)]
@@ -42,7 +39,7 @@ namespace CAHealthQueries.Models
         [StringLength(50)]
         public string City { get; set; }
         [Column("ZIP")]
-        public int Zip { get; set; }
+        public int? Zip { get; set; }
         [Column("ZIP9")]
         public int? Zip9 { get; set; }
         [Column("FACADMIN")]
@@ -66,7 +63,7 @@ namespace CAHealthQueries.Models
         [StringLength(50)]
         public string CountyName { get; set; }
         [Column("DISTRICT_NUMBER")]
-        public int DistrictNumber { get; set; }
+        public int? DistrictNumber { get; set; }
         [Required]
         [Column("DISTRICT_NAME")]
         [StringLength(50)]
@@ -81,19 +78,19 @@ namespace CAHealthQueries.Models
         [Column("BUSINESS_NAME")]
         [StringLength(100)]
         public string BusinessName { get; set; }
-        [Column("INITIAL_LICENSE_DATE")]
+        [Column("INITIAL_LICENSE_DATE", TypeName = "date")]
         public DateTime? InitialLicenseDate { get; set; }
-        [Column("LICENSE_EFFECTIVE_DATE")]
+        [Column("LICENSE_EFFECTIVE_DATE", TypeName = "date")]
         public DateTime? LicenseEffectiveDate { get; set; }
-        [Column("LICENSE_EXPIRATION_DATE")]
+        [Column("LICENSE_EXPIRATION_DATE", TypeName = "date")]
         public DateTime? LicenseExpirationDate { get; set; }
         [Column("ENTITY_TYPE_DESCRIPTION")]
         [StringLength(50)]
         public string EntityTypeDescription { get; set; }
         [Column("LATITUDE")]
-        public double Latitude { get; set; }
+        public double? Latitude { get; set; }
         [Column("LONGITUDE")]
-        public double Longitude { get; set; }
+        public double? Longitude { get; set; }
         [Required]
         [Column("LOCATION")]
         [StringLength(50)]

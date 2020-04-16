@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CAHealthQueries.Models
+namespace CAHealthQueries.NPPES
 {
     [Table("healthcare_facility_services")]
     public partial class HealthcareFacilityServices
     {
-        [Required]
-        [Column("FACID")]
-        public decimal? Facid { get; set; }
+        [Column("FACID", TypeName = "numeric(18, 0)")]
+        public decimal Facid { get; set; }
         [Required]
         [Column("FACNAME")]
         [StringLength(100)]
@@ -57,7 +56,7 @@ namespace CAHealthQueries.Models
         [Column("COUNTY_NAME")]
         [StringLength(50)]
         public string CountyName { get; set; }
-        [Column("START_DATE")]
+        [Column("START_DATE", TypeName = "date")]
         public DateTime StartDate { get; set; }
         [Column("LONGITUDE")]
         [StringLength(50)]
