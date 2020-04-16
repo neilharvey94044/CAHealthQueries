@@ -17,8 +17,8 @@ For more information on the DB access methods explored in this project see [Enti
 
 #### Files
 - **ConsoleApplication.cs**
-  - This class contains all of the queries as separate methods.  Simply undocument the invocations in the run() methods as desired.
-- **Process.cs**
+  - This class contains all of the queries as separate methods.  Simply undocument the invocations in the run() method as desired.
+- **Program.cs**
     - Contains the Main() method.  Sets up the application container, services, logging, dependency injection, configuration, etc..  Please note that this application uses the Secret Manager tool to hide the database credentials.  See [Safe storage of app secrets in development in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows)
 
 
