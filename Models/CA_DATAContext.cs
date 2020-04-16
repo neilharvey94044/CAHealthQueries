@@ -18,11 +18,6 @@ namespace CAHealthQueries.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                //TODO: remove connection string from code
-                optionsBuilder.UseSqlServer("Data Source=127.0.0.1;User ID=sa;Password=Bracket4Tree@;Initial Catalog=CA_DATA;Connect Timeout=30;Encrypt=False;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

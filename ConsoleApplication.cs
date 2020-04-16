@@ -52,10 +52,10 @@ namespace CAHealthQueries
             // EFCoreQuery2();
 
             // LINQ to Entities query with simple join of locations and services
-            // LINQ2EntityQuery1();
+             LINQ2EntityQuery1();
 
             // ADO.NET query using DataReader; return only the specified county
-             ADONET_DataReader_Query1("SAN FRANCISCO");
+            // ADONET_DataReader_Query1("SAN FRANCISCO");
         }
 
         private void ADONET_DataReader_Query1(String countyName)
