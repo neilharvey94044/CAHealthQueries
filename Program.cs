@@ -1,4 +1,4 @@
-﻿using CAHealthQueries.Models;
+﻿using CAHealthQueries.NPPES;
 using System;
 using Microsoft.Data.SqlClient;
 using System.Linq;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog.Web;
+using NLog.Extensions.Logging;
 
 /*
  * Explore and create boilerplate code for data access to SQL Server.
@@ -20,50 +20,61 @@ using NLog.Web;
  */
 namespace CAHealthQueries
 {
-        class Program
-        {
+    class Program
+    {
+
+        static private IHostEnvironment _env { get; set; }
             static void Main(string[] args)
             {
-                // configure NLog
-                var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-                logger.Info("Main starting.");
+                try
+                {
 
                 // Configure the host container
                 var hbldr = CreateHostBuilder(args).Build();
 
-                // Configure services
-                var config = hbldr.Services.GetService<IConfiguration>();
-                var serviceProvider = ConfigureServices(config);
+                    // Configure services
+                    var config = hbldr.Services.GetService<IConfiguration>();
+                    var serviceProvider = ConfigureServices(config);
 
-                // Execute the application
-                serviceProvider.GetService<ConsoleApplication>().run(args);
+                    // Execute the application
+                    serviceProvider.GetService<ConsoleApplication>().run(args);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    NLog.LogManager.Shutdown();
+                }
             }
 
-            public static IHostBuilder CreateHostBuilder(string[] args) =>
-                  Host.CreateDefaultBuilder(args)
-                       .ConfigureLogging(logging =>
-                       {
-                           logging.ClearProviders();
-                           logging.AddConsole();
-                           logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
-                       })
-                      .UseNLog()
-                      .ConfigureAppConfiguration((hostingcontex, config) =>
-                      {
-                          config.AddEnvironmentVariables()
-                          .AddCommandLine(args)
-                          .AddUserSecrets<ConsoleApplication>();
-                      });
-
-
-            public static ServiceProvider ConfigureServices(IConfiguration config)
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingcontex, config) =>
+                {
+                    _env = hostingcontex.HostingEnvironment;
+                    config.AddEnvironmentVariables()
+                    .AddCommandLine(args);
+                    if (_env.IsDevelopment())
+                    {
+                        config.AddUserSecrets<ConsoleApplication>();
+                    }
+                });
+                
+        public static ServiceProvider ConfigureServices(IConfiguration config)
             {
-                return new ServiceCollection()
-                    .AddLogging()
-                    .Configure<LoggerFilterOptions>(c => c.MinLevel = LogLevel.Trace)
-                    .AddTransient<ConsoleApplication>()
-                    .AddSingleton<IConfiguration>(config)
-                    .BuildServiceProvider();
+            return new ServiceCollection()
+                .AddLogging(builder =>
+                {
+                    builder.ClearProviders();
+                    builder.SetMinimumLevel(LogLevel.Trace);
+                    builder.AddNLog("nlog.config");
+                })
+                .AddTransient<ConsoleApplication>()
+                .AddSingleton<IConfiguration>(config)
+                .AddSingleton<IHostEnvironment>(_env)
+                .BuildServiceProvider();
             }
     }
  }

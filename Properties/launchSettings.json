@@ -2,7 +2,10 @@
   "profiles": {
     "CAHealthQueries": {
       "commandName": "Project",
-      "workingDirectory": "D:\\dev\\repos\\CAHealthQueries\\"
+      "workingDirectory": "D:\\dev\\repos\\CAHealthQueries\\",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
     }
   }
 }
